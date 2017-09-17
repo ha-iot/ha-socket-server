@@ -1,0 +1,20 @@
+{
+  "name": "ha-socket-server",
+  "version": "0.0.1",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^4.7.0",
+    "express": "^4.15.4",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "author": "Jean Rodrigues",
+  "license": "MIT"
+}
