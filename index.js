@@ -7,18 +7,24 @@ server.listen(+process.env.PORT || 3000)
 
 let arduinoHandler = null
 const endUserRoom = 'endUsers'
+let lamps = []
 
 io.on('connection', socket => {
-  socket.on('response', ({message}) => {
-    console.log(message)
+  socket.on('updateLamps', _lamps => { // Receive from Arduino handler
+    io.to(endUserRoom).emit('lampsState', lamps = _lamps)
   })
 
-  socket.on('specify client', data => {
-    if (data.type === 'arduinoHandler') {
-      socket.emit('response', {message: setArduinoHandler(socket)})
+  socket.on('specifyClient', data => {
+    if (data && data.type === 'arduinoHandler') {
+      arduinoHandler = socket
+      socket.emit('getLampsState')
     } else {
       socket.join(endUserRoom)
     }
+  })
+
+  socket.on('getLampsState', () => {
+    socket.emit('lampsState', lamps)
   })
 
   socket.on('arduinoAction',
@@ -49,22 +55,9 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     if (arduinoHandler === socket) {
       arduinoHandler = null
+      io.to(endUserRoom).emit('updateLamps', lamps = [])
     } else if (endUserRoom in socket.rooms) {
       socket.leave(endUserRoom)
     }
   })
 })
-
-/**
- * Receives a socket connection, checks as the Arduino handler and returns a message
- * @param {Socket} socket
- * @returns {String} A message as string
- */
-function setArduinoHandler (socket) {
-  if (arduinoHandler) {
-    return 'There is already an Arduino handler.'
-  }
-
-  arduinoHandler = socket
-  return 'You are now the Arduino handler.'
-}
