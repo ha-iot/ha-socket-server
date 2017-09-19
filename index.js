@@ -10,24 +10,24 @@ const endUserRoom = 'endUsers'
 let lamps = []
 
 io.on('connection', socket => {
-  socket.on('updateLamps', _lamps => { // Receive from Arduino handler
-    io.to(endUserRoom).emit('lampsState', lamps = _lamps)
+  socket.on('hardware/lampsState', _lamps => {
+    io.to(endUserRoom).emit('client/lampsState', lamps = _lamps)
   })
 
-  socket.on('specifyClient', data => {
-    if (data && data.type === 'arduinoHandler') {
+  socket.on('general/specifyClient', data => {
+    if (data && data.type === 'hardwareHandler') {
       arduinoHandler = socket
-      socket.emit('getLampsState')
+      socket.emit('hardware/getLampsState')
     } else {
       socket.join(endUserRoom)
     }
   })
 
-  socket.on('getLampsState', () => {
-    socket.emit('lampsState', lamps)
+  socket.on('client/getLampsState', () => {
+    socket.emit('client/lampsState', lamps)
   })
 
-  socket.on('arduinoAction',
+  socket.on('client/lampsAction',
     /**
      * {target: 'all', action: 'toggle'}
      * {target: 2, action: 'close'}
@@ -35,19 +35,15 @@ io.on('connection', socket => {
      * @param {{target, action}} data
      */
     (data) => {
-      if (!arduinoHandler) {
-        socket.emit('response', {message: 'No handler connected.'})
-        return
-      }
       if (socket === arduinoHandler) {
-        socket.emit('response', {message: 'You can\'t send an action to yourself.'})
+        socket.emit('hardware/response', {message: 'You can\'t send an action to yourself.'})
         return
       }
 
       if (data.target && ['toggle', 'open', 'close'].indexOf(data.action) >= 0) {
-        arduinoHandler.emit('action', data)
+        arduinoHandler.emit('hardware/action', data)
       } else {
-        socket.emit('response', {message: 'You sent invalid data.'})
+        socket.emit('client/response', {message: 'You sent invalid data.'})
       }
     }
   )
@@ -55,7 +51,7 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     if (arduinoHandler === socket) {
       arduinoHandler = null
-      io.to(endUserRoom).emit('updateLamps', lamps = [])
+      io.to(endUserRoom).emit('client/lampsState', lamps = [])
     } else if (endUserRoom in socket.rooms) {
       socket.leave(endUserRoom)
     }
