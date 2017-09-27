@@ -35,7 +35,10 @@ io.on('connection', socket => {
      * @param {{target, action}} data
      */
     (data) => {
-      if (socket === arduinoHandler) {
+      if (!arduinoHandler) {
+        socket.emit('client/response', {message: 'No handler connected.'})
+        return
+      } else if (socket === arduinoHandler) {
         socket.emit('hardware/response', {message: 'You can\'t send an action to yourself.'})
         return
       }
