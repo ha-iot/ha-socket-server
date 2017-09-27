@@ -40,7 +40,7 @@ io.on('connection', socket => {
         return
       }
 
-      if (data.target && ['toggle', 'open', 'close'].indexOf(data.action) >= 0) {
+      if (data.target && ['toggle', 'on', 'off'].indexOf(data.action) >= 0) {
         arduinoHandler.emit('hardware/action', data)
       } else {
         socket.emit('client/response', {message: 'You sent invalid data.'})
