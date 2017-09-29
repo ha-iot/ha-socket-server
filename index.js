@@ -5,13 +5,15 @@ const io = require('socket.io')(server)
 
 server.listen(+process.env.PORT || 3000)
 
-let arduinoHandler = null
-const endUserRoom = 'endUsers'
+const HARDWARE_ACTIONS = {toggle: true, on: true, off: true}
+const END_USER_ROOM = 'endUsers'
+
 let lamps = []
+let arduinoHandler = null
 
 io.on('connection', socket => {
   socket.on('hardware/lampsState', _lamps => {
-    io.to(endUserRoom).emit('client/lampsState', lamps = _lamps)
+    io.to(END_USER_ROOM).emit('client/lampsState', lamps = _lamps)
   })
 
   socket.on('general/specifyClient', data => {
@@ -19,7 +21,7 @@ io.on('connection', socket => {
       arduinoHandler = socket
       socket.emit('hardware/getLampsState')
     } else {
-      socket.join(endUserRoom)
+      socket.join(END_USER_ROOM)
     }
   })
 
@@ -43,7 +45,7 @@ io.on('connection', socket => {
         return
       }
 
-      if (data.target && ['toggle', 'on', 'off'].indexOf(data.action) >= 0) {
+      if (data.target && data.action in HARDWARE_ACTIONS) {
         arduinoHandler.emit('hardware/action', data)
       } else {
         socket.emit('client/response', {message: 'You sent invalid data.'})
@@ -54,9 +56,9 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     if (arduinoHandler === socket) {
       arduinoHandler = null
-      io.to(endUserRoom).emit('client/lampsState', lamps = [])
-    } else if (endUserRoom in socket.rooms) {
-      socket.leave(endUserRoom)
+      io.to(END_USER_ROOM).emit('client/lampsState', lamps = [])
+    } else if (END_USER_ROOM in socket.rooms) {
+      socket.leave(END_USER_ROOM)
     }
   })
 })
