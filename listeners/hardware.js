@@ -1,14 +1,31 @@
-const {END_USER_ROOM} = require('../constants')
+const {END_USER_ROOM, HARDWARE_ACTIONS} = require('../constants')
 
 module.exports = (io, socket, state) => {
+  let _hardwareActions
   state.arduinoHandler = socket
-  socket.emit('hardware/getLampsState')
+  socket.emit('hardware/getData')
 
-  socket.on('hardware/lampsState', _lamps => {
-    emitLampsToClient(_lamps)
+  socket.on('hardware/data',
+    /**
+     * @param {{lampsState, hardwareActions}} data
+     */
+    (data) => {
+      _hardwareActions = data.hardwareActions
+      _hardwareActions.forEach(action => {
+        HARDWARE_ACTIONS[action] = true
+      })
+      emitLampsToClient(data.lampsState)
+    }
+  )
+
+  socket.on('hardware/lampsState', lamps => {
+    emitLampsToClient(lamps)
   })
 
   socket.on('disconnect', () => {
+    _hardwareActions.forEach(action => {
+      delete HARDWARE_ACTIONS[action]
+    })
     state.arduinoHandler = null
     emitLampsToClient([])
   })

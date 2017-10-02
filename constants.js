@@ -1,4 +1,4 @@
 module.exports = {
-  HARDWARE_ACTIONS: {toggle: true, on: true, off: true},
+  HARDWARE_ACTIONS: {},
   END_USER_ROOM: 'endUsers'
 }
