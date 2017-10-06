@@ -1,7 +1,12 @@
 const {END_USER_ROOM, HARDWARE_ACTIONS} = require('../constants')
 
-module.exports = (socket, state) => {
+module.exports = (io, socket, state) => {
   socket.join(END_USER_ROOM)
+
+  const clients = io.sockets.clients(END_USER_ROOM)
+  io.to(END_USER_ROOM).emit('client/clientsConnected', {
+    clientsConnected: clients.length
+  })
 
   socket.on('client/getLampsState', () => {
     socket.emit('client/lampsState', state.lamps)

@@ -15,10 +15,11 @@ let state = {
 
 io.on('connection', socket => {
   socket.on('general/specifyClient', data => {
+    const params = [io, socket, state]
     if (data && data.type === 'hardwareHandler') {
-      hardwareListenerSetup(io, socket, state)
+      hardwareListenerSetup(...params)
     } else {
-      clientListenerSetup(socket, state)
+      clientListenerSetup(...params)
     }
   })
 })
