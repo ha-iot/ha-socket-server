@@ -2,11 +2,7 @@ const {END_USER_ROOM, HARDWARE_ACTIONS} = require('../constants')
 
 module.exports = (io, socket, state) => {
   socket.join(END_USER_ROOM)
-
-  const clients = io.sockets.clients(END_USER_ROOM)
-  io.to(END_USER_ROOM).emit('client/clientsConnected', {
-    clientsConnected: clients.length
-  })
+  _emitClientsLogged(io)
 
   socket.on('client/getLampsState', () => {
     socket.emit('client/lampsState', state.lamps)
@@ -35,5 +31,13 @@ module.exports = (io, socket, state) => {
 
   socket.on('disconnect', () => {
     socket.leave(END_USER_ROOM)
+    _emitClientsLogged(io)
+  })
+}
+
+function _emitClientsLogged (io) {
+  const clients = io.sockets.clients(END_USER_ROOM)
+  io.to(END_USER_ROOM).emit('client/clientsConnected', {
+    clientsConnected: clients.length
   })
 }
