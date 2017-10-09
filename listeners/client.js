@@ -36,8 +36,7 @@ module.exports = (io, socket, state) => {
 }
 
 function _emitClientsLogged (io) {
-  const clients = io.of('/').in(END_USER_ROOM).clients
-  io.to(END_USER_ROOM).emit('client/clientsConnected', {
-    clientsConnected: clients.length
+  io.of('/').in(END_USER_ROOM).clients((_, clients) => {
+    io.to(END_USER_ROOM).emit('client/clientsConnected', {data: clients.length})
   })
 }
