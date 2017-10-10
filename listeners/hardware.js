@@ -2,7 +2,7 @@ const {END_USER_ROOM, HARDWARE_ACTIONS} = require('../constants')
 
 module.exports = (io, socket, state) => {
   let _hardwareActions
-  state.arduinoHandler = socket
+  state.hardwareHandler = socket
   socket.emit('hardware/getData')
 
   socket.on('hardware/data',
@@ -26,7 +26,7 @@ module.exports = (io, socket, state) => {
     _hardwareActions.forEach(action => {
       delete HARDWARE_ACTIONS[action]
     })
-    state.arduinoHandler = null
+    state.hardwareHandler = null
     emitLampsToClient([])
   })
 

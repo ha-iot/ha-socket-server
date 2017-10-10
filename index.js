@@ -13,7 +13,7 @@ server.listen(PORT, () => {
 
 let state = {
   lamps: [],
-  arduinoHandler: null
+  hardwareHandler: null
 }
 
 io.on('connection', socket => {

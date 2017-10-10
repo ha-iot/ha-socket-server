@@ -16,13 +16,13 @@ module.exports = (io, socket, state) => {
      * @param {{target, action}} data
      */
     (data) => {
-      if (!state.arduinoHandler) {
+      if (!state.hardwareHandler) {
         socket.emit('client/response', {message: 'No handler connected.'})
         return
       }
 
       if (data.target && data.action in HARDWARE_ACTIONS) {
-        state.arduinoHandler.emit('hardware/action', data)
+        state.hardwareHandler.emit('hardware/action', data)
       } else {
         socket.emit('client/response', {message: 'You sent invalid data.'})
       }
