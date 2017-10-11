@@ -1,8 +1,9 @@
+const socketLib = require('socket.io')
 const clientListenerSetup = require('./client')
 const hardwareListenerSetup = require('./hardware')
 
 module.exports = server => {
-  const io = require('socket.io')(server)
+  const io = socketLib(server)
 
   let state = {
     lamps: [],
