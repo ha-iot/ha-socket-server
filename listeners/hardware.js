@@ -1,7 +1,6 @@
 const {END_USER_ROOM, HARDWARE_ACTIONS} = require('../constants')
 
 module.exports = (io, socket, state) => {
-  let _hardwareActions
   state.hardwareHandler = socket
   socket.emit('hardware/getData')
 
@@ -10,9 +9,8 @@ module.exports = (io, socket, state) => {
      * @param {{lampsState, hardwareActions}} data
      */
     (data) => {
-      _hardwareActions = data.hardwareActions
-      _hardwareActions.forEach(action => {
-        HARDWARE_ACTIONS[action] = true
+      data.hardwareActions.forEach(action => {
+        HARDWARE_ACTIONS.add(action)
       })
       emitLampsToClient(data.lampsState)
     }
@@ -23,9 +21,7 @@ module.exports = (io, socket, state) => {
   })
 
   socket.on('disconnect', () => {
-    _hardwareActions.forEach(action => {
-      delete HARDWARE_ACTIONS[action]
-    })
+    HARDWARE_ACTIONS.clear()
     state.hardwareHandler = null
     emitLampsToClient([])
   })
