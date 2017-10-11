@@ -1,0 +1,6 @@
+version: '3'
+services:
+  socket-server:
+    build: .
+    ports:
+      - "3003:3003"

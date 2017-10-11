@@ -6,6 +6,9 @@
     "npm": "5.4.1",
     "node": "8.1.4"
   },
+  "scripts": {
+    "start": "node ."
+  },
   "dependencies": {
     "dotenv": "^4.0.0",
     "eslint": "^4.7.0",

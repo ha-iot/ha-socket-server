@@ -1,0 +1,14 @@
+# Files
+Dockerfile
+docker-compose.yml
+.editorconfig
+.env
+.env.example
+.eslintrc.json
+.gitignore
+Procfile
+
+# Directories
+.git/
+.idea/
+node_modules/

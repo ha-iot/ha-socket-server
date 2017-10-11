@@ -6,7 +6,7 @@ const hardwareListenerSetup = require('./listeners/hardware')
 const server = require('http').Server(require('express')())
 const io = require('socket.io')(server)
 
-const PORT = +process.env.PORT || 3000
+const PORT = +process.env.PORT || 3003
 server.listen(PORT, () => {
   console.log(`Server up and running at port ${PORT}.`)
 })
