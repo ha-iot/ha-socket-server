@@ -21,7 +21,7 @@ module.exports = (io, socket, state) => {
         return
       }
 
-      if (data.target && data.action in HARDWARE_ACTIONS) {
+      if (data.target && HARDWARE_ACTIONS.has(data.action)) {
         state.hardwareHandler.emit('hardware/action', data)
       } else {
         socket.emit('client/response', {message: 'You sent invalid data.'})
