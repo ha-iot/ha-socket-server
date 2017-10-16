@@ -10,9 +10,6 @@ module.exports = (io, socket, state) => {
 
   socket.on('client/lampsAction',
     /**
-     * {target: 'all', action: 'toggle'}
-     * {target: 2, action: 'close'}
-     * {target: 0, action: 'open'}
      * @param {{target, action}} data
      */
     (data) => {
