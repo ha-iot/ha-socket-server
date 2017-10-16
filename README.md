@@ -24,6 +24,7 @@ At the end of the next steps, a server will be up and running on your [local 300
 
 ```bash
 git clone https://github.com/ha-iot/ha-socket-server/
+cd ha-socket-server
 npm i
 npm start
 ```
