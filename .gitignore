@@ -2,5 +2,7 @@
 .env
 
 # Directories
+coverage/
 .idea/
 node_modules/
+.nyc_output/

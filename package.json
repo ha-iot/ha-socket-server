@@ -7,7 +7,9 @@
     "node": "8.1.4"
   },
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/_mocha --require should ./test/",
+    "generate-coverage": "./node_modules/.bin/nyc report --reporter=lcov"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
@@ -20,7 +22,11 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^4.0.1",
+    "nyc": "^11.2.1",
+    "should": "^13.1.2",
+    "socket.io-client": "^2.0.3"
   },
   "author": "Jean Rodrigues",
   "license": "MIT"
