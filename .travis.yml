@@ -4,6 +4,10 @@ cache:
   directories:
     - "node_modules"
 
+before_install:
+  - nvm install $(jq -r '.engines.node' package.json)
+  - npm i -g npm@$(jq -r '.engines.npm' package.json)
+
 after_success:
   - npm run generate-coverage
   - bash <(curl -s https://codecov.io/bash)
