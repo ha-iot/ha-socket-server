@@ -8,3 +8,5 @@ server.listen(PORT, () => {
 })
 
 require('./listeners/mainConnection')(server)
+
+module.exports = server
