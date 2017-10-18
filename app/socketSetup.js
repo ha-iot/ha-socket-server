@@ -1,6 +1,6 @@
 const socketLib = require('socket.io')
-const clientListenerSetup = require('./client')
-const hardwareListenerSetup = require('./hardware')
+const clientListenerSetup = require('./client/listeners')
+const hardwareListenerSetup = require('./hardware/listeners')
 
 module.exports = server => {
   const io = socketLib(server)

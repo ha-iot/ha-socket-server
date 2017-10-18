@@ -7,6 +7,6 @@ server.listen(PORT, () => {
   console.log(`Server up and running at port ${PORT}.`)
 })
 
-require('./listeners/mainConnection')(server)
+require('./app/socketSetup')(server)
 
 module.exports = server
