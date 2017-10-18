@@ -28,6 +28,9 @@
     "should": "^13.1.2",
     "socket.io-client": "^2.0.3"
   },
-  "author": "Jean Rodrigues",
+  "contributors": [
+    "Jourdan Rodrigues <thiagojourdan@gmail.com> (https://jourdanrodrigues.github.com/)",
+    "Jean Rodrigues <jeanrodrigues002@gmail.com>"
+  ],
   "license": "MIT"
 }
