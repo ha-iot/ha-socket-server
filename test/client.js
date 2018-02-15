@@ -3,12 +3,12 @@ const getServer = require('./server')
 
 describe('Client', () => {
   const _getSocketClient = () => socketLib.connect(`http://localhost:${server.port}/`)
-  const _defineHardwareSocket = ({lampsState, hardwareActions}, callback) => {
+  const _defineHardwareSocket = ({lampsState}, callback) => {
     const socketHardware = _getSocketClient()
     socketHardware.emit('general/specifyClient', {type: 'hardwareHandler'})
     socketHardware.on('hardware/getData', () => {
       socketHardware.emit('hardware/data', {
-        hardwareActions: hardwareActions || ['toggle'],
+        hardwareActions: ['toggle'],
         lampsState: lampsState || []
       })
       callback(socketHardware)
