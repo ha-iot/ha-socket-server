@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
-    state: {
+    isOn: {
       allowNull: false,
       defaultValue: false,
       type: DataTypes.BOOLEAN

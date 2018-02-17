@@ -18,7 +18,7 @@ module.exports = {
       allowNull: false,
       type: Sequelize.STRING
     },
-    state: {
+    isOn: {
       allowNull: false,
       defaultValue: false,
       type: Sequelize.BOOLEAN
