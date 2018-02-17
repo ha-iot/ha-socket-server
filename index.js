@@ -1,5 +1,7 @@
 require('dotenv').config({silent: true})
 
+require('./models')
+
 const server = require('http').Server(require('express')())
 const PORT = +process.env.PORT || 3003
 
