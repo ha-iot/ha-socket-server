@@ -5,7 +5,8 @@ const basename = path.basename(__filename)
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
-  logging: false
+  logging: false,
+  operatorsAliases: Sequelize.Op
 })
 
 const db = fs
