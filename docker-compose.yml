@@ -1,6 +1,17 @@
 version: '3'
 services:
-  socket-server:
+  ha_db:
+    container_name: ha_db
+    image: postgres:10.2
+    environment:
+      - POSTGRES_PASSWORD=haiot_pass
+      - POSTGRES_USER=haiot_user
+      - POSTGRES_DB=haiot_db
+  ha_socket_server:
+    container_name: ha_socket_server
     build: .
+    environment:
+      - DATABASE_URL=postgres://haiot_user:haiot_pass@ha_db/haiot_db
+      - PORT=3003
     ports:
-      - "3003:3003"
+      - "3000:3003"
