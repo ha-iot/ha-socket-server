@@ -1,6 +1,6 @@
 const socketLib = require('socket.io-client')
 
-describe('Hardware', () => {
+describe('Board', () => {
   let server
   let socketClient
   const _getSocketClient = () => socketLib.connect(`http://localhost:${server.port}/`)

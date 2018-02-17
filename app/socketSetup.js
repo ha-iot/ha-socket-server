@@ -1,6 +1,6 @@
 const socketLib = require('socket.io')
 const clientListenerSetup = require('./client/listeners')
-const hardwareListenerSetup = require('./hardware/listeners')
+const boardListenerSetup = require('./board/listeners')
 
 module.exports = server => {
   const io = socketLib(server)
@@ -14,7 +14,7 @@ module.exports = server => {
     socket.on('general/specifyClient', data => {
       const params = [io, socket, state]
       if (data && data.type === 'hardwareHandler') {
-        hardwareListenerSetup(...params)
+        boardListenerSetup(...params)
       } else {
         clientListenerSetup(...params)
       }
