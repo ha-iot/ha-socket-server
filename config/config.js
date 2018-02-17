@@ -1,16 +1,15 @@
 require('dotenv').config({silent: true})
 
+const Sequelize = require('sequelize')
+
+const config = {
+  use_env_variable: 'DATABASE_URL',
+  dialect: 'postgres',
+  operatorsAliases: Sequelize.Op
+}
+
 module.exports = {
-  'development': {
-    'use_env_variable': 'DATABASE_URL',
-    'dialect': 'postgres'
-  },
-  'test': {
-    'use_env_variable': 'DATABASE_URL',
-    'dialect': 'postgres'
-  },
-  'production': {
-    'use_env_variable': 'DATABASE_URL',
-    'dialect': 'postgres'
-  }
+  development: config,
+  test: config,
+  production: config
 }

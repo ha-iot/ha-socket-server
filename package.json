@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node .",
     "test": "./node_modules/.bin/nyc --all ./node_modules/.bin/_mocha --recursive --require should ./test/",
-    "generate-coverage": "./node_modules/.bin/nyc report --reporter=lcov"
+    "generate-coverage": "./node_modules/.bin/nyc report --reporter=lcov",
+    "sequelize": "./node_modules/.bin/sequelize"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
@@ -28,6 +29,7 @@
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "proxyquire": "^1.8.0",
+    "sequelize-cli": "^4.0.0",
     "should": "^13.1.2",
     "sinon": "^4.4.1",
     "socket.io-client": "^2.0.3"
