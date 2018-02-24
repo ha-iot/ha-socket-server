@@ -16,14 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   }, {
-    freezeTableName: true,
-    classMethods: {
-      associate: _associate
-    }
+    freezeTableName: true
   })
-  return Action
 
-  function _associate (models) {
-    Action.belongsTo(models['Board'])
+  Action.associate = ({Board}) => {
+    Action.belongsTo(Board, {foreignKey: 'boardId'})
   }
+
+  return Action
 }

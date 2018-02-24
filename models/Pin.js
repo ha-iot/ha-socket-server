@@ -25,14 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN
     }
   }, {
-    freezeTableName: true,
-    classMethods: {
-      associate: _associate
-    }
+    freezeTableName: true
   })
-  return Pin
 
-  function _associate (models) {
-    Pin.belongsTo(models['Board'])
+  Pin.associate = ({Board}) => {
+    Pin.belongsTo(Board, {foreignKey: 'boardId'})
   }
+
+  return Pin
 }

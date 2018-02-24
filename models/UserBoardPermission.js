@@ -22,16 +22,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   }, {
-    freezeTableName: true,
-    classMethods: {
-      associate: _associate
-    }
+    freezeTableName: true
   })
 
-  return UserBoardPermission
-
-  function _associate (models) {
-    UserBoardPermission.hasOne(models['User'])
-    UserBoardPermission.hasOne(models['Board'])
+  UserBoardPermission.associate = ({User, Board}) => {
+    UserBoardPermission.belongsTo(User, {foreignKey: 'userId'})
+    UserBoardPermission.belongsTo(Board, {foreignKey: 'userId'})
   }
+
+  return UserBoardPermission
 }
