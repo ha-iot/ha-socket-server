@@ -7,6 +7,11 @@ server.listen(PORT, () => {
   console.log(`Server up and running at port ${PORT}.`)
 })
 
+server.globalState = {
+  lamps: [],
+  hardwareHandler: null
+}
+
 require('./app/socketSetup')(server)
 
 module.exports = server

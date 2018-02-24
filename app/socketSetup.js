@@ -5,14 +5,9 @@ const boardListenerSetup = require('./board/listeners')
 module.exports = server => {
   const io = socketLib(server)
 
-  let state = {
-    lamps: [],
-    hardwareHandler: null
-  }
-
   io.on('connection', socket => {
     socket.on('general/specifyClient', data => {
-      const params = [io, socket, state]
+      const params = [io, socket, server.globalState]
       if (data && data.type === 'hardwareHandler') {
         boardListenerSetup(...params)
       } else {
