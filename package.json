@@ -26,6 +26,7 @@
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "should": "^13.1.2",
+    "sinon": "^4.4.1",
     "socket.io-client": "^2.0.3"
   },
   "contributors": [
