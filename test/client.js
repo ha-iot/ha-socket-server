@@ -44,15 +44,16 @@ describe('Client', () => {
     done()
   })
 
-  it('should broadcast "client/clientsConnected" after successful connection', done => {
+  it('should broadcast "client/clientsConnected" on connection', done => {
     const _clientsConnected = ['client 1', 'client 2']
-    io.clients = fn => {
+    io.clients = sinon.stub().callsFake(fn => {
       fn('whatever', _clientsConnected)
-    }
+    })
 
     clientListener(io, socket, state)
 
     assert(io.to.calledOnce)
+    assert(io.to.calledBefore(io.emit))
     assert(io.to.calledWithExactly('endUsers'))
     assert(io.emit.calledOnce)
     assert(io.emit.calledWithExactly('client/clientsConnected', {data: _clientsConnected.length}))
@@ -67,11 +68,11 @@ describe('Client', () => {
   })
 
   it('should emit "client/lampsState" with lamps state when "client/getLampsState" is triggered', done => {
-    socket.on = (event, handler) => {
+    socket.on = sinon.stub().callsFake((event, handler) => {
       if (event === 'client/getLampsState') {
         handler()
       }
-    }
+    })
 
     clientListener(io, socket, state)
 
@@ -93,11 +94,11 @@ describe('Client', () => {
 
     const actionData = {target: 'a board pin', action}
 
-    socket.on = (event, handler) => {
+    socket.on = sinon.stub().callsFake((event, handler) => {
       if (event === 'client/lampsAction') {
         handler(actionData)
       }
-    }
+    })
 
     state.hardwareHandler = _getSocketClient()
 
@@ -109,11 +110,11 @@ describe('Client', () => {
   })
 
   it('should emit "client/response" with error message when "client/lampsAction" is triggered and there is no board connected', done => {
-    socket.on = (event, handler) => {
+    socket.on = sinon.stub().callsFake((event, handler) => {
       if (event === 'client/lampsAction') {
         handler()
       }
-    }
+    })
 
     clientListener(io, socket, state)
 
@@ -127,11 +128,11 @@ describe('Client', () => {
 
     state.hardwareHandler = _getSocketClient()
 
-    socket.on = (event, handler) => {
+    socket.on = sinon.stub().callsFake((event, handler) => {
       if (event === 'client/lampsAction') {
         handler(actionData)
       }
-    }
+    })
 
     clientListener(io, socket, state)
 
@@ -148,11 +149,11 @@ describe('Client', () => {
   })
 
   it('should leave the room when user disconnects', done => {
-    socket.on = (event, handler) => {
+    socket.on = sinon.stub().callsFake((event, handler) => {
       if (event === 'disconnect') {
         handler()
       }
-    }
+    })
 
     clientListener(io, socket, state)
 
@@ -170,15 +171,16 @@ describe('Client', () => {
       fn('some value', _clientsConnected)
     })
 
-    socket.on = (event, handler) => {
+    socket.on = sinon.stub().callsFake((event, handler) => {
       if (event === 'disconnect') {
         handler()
       }
-    }
+    })
 
     clientListener(io, socket, state)
 
     assert(io.to.calledOnce)
+    assert(io.to.calledBefore(io.emit))
     assert(io.to.calledWithExactly('endUsers'))
     assert(io.emit.calledOnce)
     assert(io.emit.calledWithExactly('client/clientsConnected', {data: _clientsConnected.length}))
