@@ -16,7 +16,7 @@ describe('Socket server setup', () => {
   })
 
   it('should set "connection" listener', done => {
-    const setup = proxyquire('../app/socketSetup', {
+    const setup = proxyquire('../../app/socketSetup', {
       'socket.io': sinon.stub().returns(io)
     })
 
@@ -30,7 +30,7 @@ describe('Socket server setup', () => {
   })
 
   it('should set "general/specifyClient" listener when "connection" is triggered', done => {
-    const setup = proxyquire('../app/socketSetup', {
+    const setup = proxyquire('../../app/socketSetup', {
       'socket.io': sinon.stub().returns(io)
     })
 
@@ -52,7 +52,7 @@ describe('Socket server setup', () => {
   it('should setup the board listeners when "general/specifyClient" is triggered with type as "hardwareHandler"', done => {
     const boardListenerSpy = sinon.spy()
 
-    const setup = proxyquire('../app/socketSetup', {
+    const setup = proxyquire('../../app/socketSetup', {
       'socket.io': sinon.stub().returns(io),
       './board/listeners': boardListenerSpy
     })
@@ -84,7 +84,7 @@ describe('Socket server setup', () => {
   it('should setup the client listeners when "general/specifyClient" is triggered with type as undefined', done => {
     const clientListenerSpy = sinon.spy()
 
-    const setup = proxyquire('../app/socketSetup', {
+    const setup = proxyquire('../../app/socketSetup', {
       'socket.io': sinon.stub().returns(io),
       './client/listeners': clientListenerSpy
     })

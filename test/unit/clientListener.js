@@ -1,8 +1,8 @@
 const sinon = require('sinon')
 const assert = require('assert')
 
-const {HARDWARE_ACTIONS} = require('../app/constants')
-const clientListener = require('../app/client/listeners')
+const {HARDWARE_ACTIONS} = require('../../app/constants')
+const clientListener = require('../../app/client/listeners')
 
 describe('Client', () => {
   let io
