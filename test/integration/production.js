@@ -1,7 +1,7 @@
 const http = require('http')
 const path = require('path')
 
-const indexPath = path.resolve(path.dirname(__dirname), 'index.js')
+const indexPath = path.resolve(path.dirname(path.dirname(__dirname)), 'index.js')
 
 describe('Production server', () => {
   it('must start in the default port', done => {

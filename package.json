@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node .",
-    "test": "./node_modules/.bin/nyc --all ./node_modules/.bin/_mocha --require should ./test/",
+    "test": "./node_modules/.bin/nyc --all ./node_modules/.bin/_mocha --recursive --require should ./test/",
     "generate-coverage": "./node_modules/.bin/nyc report --reporter=lcov"
   },
   "dependencies": {

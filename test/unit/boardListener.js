@@ -1,8 +1,8 @@
 const assert = require('assert')
 const sinon = require('sinon')
 
-const {HARDWARE_ACTIONS} = require('../app/constants')
-const boardListeners = require('../app/board/listeners')
+const {HARDWARE_ACTIONS} = require('../../app/constants')
+const boardListeners = require('../../app/board/listeners')
 
 describe('Board', () => {
   let io
