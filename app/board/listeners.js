@@ -11,7 +11,7 @@ module.exports = (io, socket, state) => {
   socket.on('disconnect', _disconnect.bind(_this))
 }
 
-function _disconnect () {
+function _disconnect() {
   const {io, state} = this
   HARDWARE_ACTIONS.clear()
   state.hardwareHandler = null
@@ -21,7 +21,7 @@ function _disconnect () {
 /**
  * @param {{lampsState, hardwareActions}} data
  */
-function _receiveBoardData (data) {
+function _receiveBoardData(data) {
   const {io, state} = this
   data.hardwareActions.forEach(action => {
     HARDWARE_ACTIONS.add(action)
@@ -29,7 +29,7 @@ function _receiveBoardData (data) {
   io.to(END_USER_ROOM).emit('client/lampsState', state.lamps = data.lampsState)
 }
 
-function _receiveBoardLampsState (lamps) {
+function _receiveBoardLampsState(lamps) {
   const {io, state} = this
   io.to(END_USER_ROOM).emit('client/lampsState', state.lamps = lamps)
 }

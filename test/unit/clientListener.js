@@ -9,12 +9,12 @@ describe('Client', () => {
   let state
   let socket
 
-  function _getSocketClient () {
+  function _getSocketClient() {
     return {
       on: sinon.spy(),
       emit: sinon.spy(),
       join: sinon.spy(),
-      leave: sinon.spy()
+      leave: sinon.spy(),
     }
   }
 
@@ -22,13 +22,13 @@ describe('Client', () => {
     socket = _getSocketClient()
 
     state = {
-      lamps: []
+      lamps: [],
       // "hardwareHandler" will be evaluated to undefined
     }
 
     io = {
       emit: sinon.spy(),
-      clients: sinon.spy()
+      clients: sinon.spy(),
     }
     io.to = sinon.stub().returns(io)
     io.of = sinon.stub().returns(io)

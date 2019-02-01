@@ -11,13 +11,13 @@ describe('Board', () => {
 
   beforeEach(() => {
     io = {
-      emit: sinon.spy()
+      emit: sinon.spy(),
     }
     io.to = sinon.stub().returns(io)
     state = {}
     socket = {
       on: sinon.spy(),
-      emit: sinon.spy()
+      emit: sinon.spy(),
     }
     HARDWARE_ACTIONS.clear()
   })
@@ -47,7 +47,7 @@ describe('Board', () => {
   it('should update the hardware actions when "hardware/data" is triggered', done => {
     const _data = {
       hardwareActions: ['action 1', 'action 2', 'action 3'],
-      lampsState: 'a state object'
+      lampsState: 'a state object',
     }
 
     socket.on = sinon.stub().callsFake((event, handler) => {
@@ -66,7 +66,7 @@ describe('Board', () => {
   it('should broadcast "client/lampsState" when "hardware/data" is triggered', done => {
     const _data = {
       hardwareActions: [],
-      lampsState: 'a state object'
+      lampsState: 'a state object',
     }
 
     socket.on = sinon.stub().callsFake((event, handler) => {

@@ -9,7 +9,7 @@ server.listen(PORT, () => {
 
 server.globalState = {
   lamps: [],
-  hardwareHandler: null
+  hardwareHandler: null,
 }
 
 require('./app/socketSetup')(server)

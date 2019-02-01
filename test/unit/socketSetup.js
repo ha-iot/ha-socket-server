@@ -8,16 +8,16 @@ describe('Socket server setup', () => {
 
   beforeEach(() => {
     io = {
-      on: sinon.spy()
+      on: sinon.spy(),
     }
     socket = {
-      on: sinon.spy()
+      on: sinon.spy(),
     }
   })
 
   it('should set "connection" listener', done => {
     const setup = proxyquire('../../app/socketSetup', {
-      'socket.io': sinon.stub().returns(io)
+      'socket.io': sinon.stub().returns(io),
     })
 
     const serverInstance = {}
@@ -34,7 +34,7 @@ describe('Socket server setup', () => {
 
     const setup = proxyquire('../../app/socketSetup', {
       'socket.io': sinon.stub().returns(io),
-      './board/listeners': boardListenerSpy
+      './board/listeners': boardListenerSpy,
     })
 
     socket.handshake = {
@@ -47,7 +47,7 @@ describe('Socket server setup', () => {
     })
 
     const serverInstance = {
-      globalState: {}
+      globalState: {},
     }
     setup(serverInstance)
 
@@ -62,7 +62,7 @@ describe('Socket server setup', () => {
 
     const setup = proxyquire('../../app/socketSetup', {
       'socket.io': sinon.stub().returns(io),
-      './client/listeners': clientListenerSpy
+      './client/listeners': clientListenerSpy,
     })
 
     socket.handshake = {
@@ -75,7 +75,7 @@ describe('Socket server setup', () => {
     })
 
     const serverInstance = {
-      globalState: {}
+      globalState: {},
     }
     setup(serverInstance)
 

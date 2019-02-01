@@ -9,13 +9,13 @@ module.exports = (io, socket, state) => {
   socket.on('disconnect', _disconnect.bind({io, socket}))
 }
 
-function _disconnect () {
+function _disconnect() {
   const {socket, io} = this
   socket.leave(END_USER_ROOM)
   _emitClientsLogged(io)
 }
 
-function _emitClientsLogged (io) {
+function _emitClientsLogged(io) {
   io.of('/').in(END_USER_ROOM).clients((_, clients) => {
     io.to(END_USER_ROOM).emit('client/clientsConnected', {data: clients.length})
   })
@@ -26,7 +26,7 @@ function _emitClientsLogged (io) {
  * @param {{target, action}} data
  * @private
  */
-function _lampsAction (data) {
+function _lampsAction(data) {
   const {state, socket} = this
 
   if (!state.hardwareHandler) {
@@ -45,7 +45,7 @@ function _lampsAction (data) {
  * Usage: pass with "bind", _emitLampsState.bind({socket: <Socket instance>})
  * @private
  */
-function _emitLampsState () {
+function _emitLampsState() {
   const {socket, state} = this
   socket.emit('client/lampsState', state.lamps)
 }
