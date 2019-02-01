@@ -29,27 +29,7 @@ describe('Socket server setup', () => {
     done()
   })
 
-  it('should set "general/specifyClient" listener when "connection" is triggered', done => {
-    const setup = proxyquire('../../app/socketSetup', {
-      'socket.io': sinon.stub().returns(io)
-    })
-
-    io.on = sinon.stub().callsFake((event, handler) => {
-      if (event === 'connection') {
-        handler(socket)
-      }
-    })
-
-    const serverInstance = {}
-    setup(serverInstance)
-
-    assert(socket.on.calledOnce)
-    assert(socket.on.calledWithExactly('general/specifyClient', sinon.match.func))
-
-    done()
-  })
-
-  it('should setup the board listeners when "general/specifyClient" is triggered with type as "hardwareHandler"', done => {
+  it('should setup the board listeners when "connection" is triggered with type as "hardwareHandler"', done => {
     const boardListenerSpy = sinon.spy()
 
     const setup = proxyquire('../../app/socketSetup', {
@@ -57,16 +37,12 @@ describe('Socket server setup', () => {
       './board/listeners': boardListenerSpy
     })
 
+    socket.handshake = {
+      query: {type: 'hardwareHandler'},
+    }
     io.on = sinon.stub().callsFake((event, handler) => {
       if (event === 'connection') {
         handler(socket)
-      }
-    })
-
-    socket.on = sinon.stub().callsFake((event, handler) => {
-      if (event === 'general/specifyClient') {
-        const data = {type: 'hardwareHandler'}
-        handler(data)
       }
     })
 
@@ -89,17 +65,12 @@ describe('Socket server setup', () => {
       './client/listeners': clientListenerSpy
     })
 
+    socket.handshake = {
+      query: {type: undefined},
+    }
     io.on = sinon.stub().callsFake((event, handler) => {
       if (event === 'connection') {
         handler(socket)
-      }
-    })
-
-    socket.on = sinon.stub().callsFake((event, handler) => {
-      if (event === 'general/specifyClient') {
-        const data = {type: undefined}
-        // const data = {} // This would work too
-        handler(data)
       }
     })
 

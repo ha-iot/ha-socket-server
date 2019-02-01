@@ -6,13 +6,12 @@ module.exports = server => {
   const io = socketLib(server)
 
   io.on('connection', socket => {
-    socket.on('general/specifyClient', data => {
-      const params = [io, socket, server.globalState]
-      if (data && data.type === 'hardwareHandler') {
-        boardListenerSetup(...params)
-      } else {
-        clientListenerSetup(...params)
-      }
-    })
+    const params = [io, socket, server.globalState]
+    const {type} = socket.handshake.query
+    if (type === 'hardwareHandler') {
+      boardListenerSetup(...params)
+    } else {
+      clientListenerSetup(...params)
+    }
   })
 }
